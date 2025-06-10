@@ -101,7 +101,7 @@ Este projeto está sob a licença da **VirtuCodex**.
 npm run build
 ```
 
-**Inicia a aplicação Front-end
+**Inicia a aplicação Front-end**
 ```bash
 npm run dev
 # or
