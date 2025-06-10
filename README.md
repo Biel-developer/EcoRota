@@ -45,12 +45,6 @@ O EcoRota é um sistema inovador que utiliza tecnologia avançada para otimizar 
 
 ---
 
-## Sobre o Projeto
-
-O EcoRota é um sistema inovador que tem como objetivo otimizar as rotas de coleta de lixo, tornando o processo mais eficiente, econômico e sustentável. Utilizamos técnicas avançadas de geoprocessamento e algoritmos de otimização para transformar a coleta de resíduos urbanos.
-
----
-
 ## Recursos
 
 - **Otimização de rota inteligente:** Algoritmos avançados para criar rotas mais eficientes, reduzindo tempo e custos.
