@@ -1,4 +1,4 @@
-![Logo](![alt text](image.png))
+![alt text](image-removebg-preview.png)
 
 
 # EcoRota
