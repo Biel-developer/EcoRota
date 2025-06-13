@@ -1,13 +1,17 @@
 package com.projeto.rotas.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
 public class OtimizarRotaRequest {
-    @NotNull
+
+   @NotNull(message = "O ID do caminhão é obrigatório.")
     private Long caminhaoId;
-    private List<String> tiposLixo; // Opcional: filtrar por tipo de lixo
+
+    @NotEmpty(message = "A lista de tipos de lixo não pode estar vazia.")
+    private List<String> tiposLixo;
 
     public OtimizarRotaRequest() {
     }

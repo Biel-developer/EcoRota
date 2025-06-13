@@ -22,25 +22,39 @@ public class RotaController {
     private final RotaOtimizacaoService rotaOtimizacaoService;
     private final RotaOtimizadaRepository rotaOtimizadaRepository;
 
-    public RotaController(RotaOtimizacaoService rotaOtimizacaoService, RotaOtimizadaRepository rotaOtimizadaRepository) {
+    public RotaController(RotaOtimizacaoService rotaOtimizacaoService,
+            RotaOtimizadaRepository rotaOtimizadaRepository) {
         this.rotaOtimizacaoService = rotaOtimizacaoService;
         this.rotaOtimizadaRepository = rotaOtimizadaRepository;
     }
 
     @PostMapping("/otimizar")
     public ResponseEntity<RotaResponse> otimizarRota(@Valid @RequestBody OtimizarRotaRequest request) {
+        System.out.println("Recebido: caminhaoId=" + request.getCaminhaoId() + ", tiposLixo=" + request.getTiposLixo());
         try {
-            RotaOtimizada rotaOtimizada = rotaOtimizacaoService.otimizarRota(request.getCaminhaoId(), request.getTiposLixo());
+            RotaOtimizada rotaOtimizada = rotaOtimizacaoService.otimizarRota(
+                    request.getCaminhaoId(), request.getTiposLixo());
+            rotaOtimizadaRepository.save(rotaOtimizada); 
             return ResponseEntity.status(HttpStatus.CREATED).body(new RotaResponse(rotaOtimizada));
         } catch (RuntimeException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
+    }
+
+    @GetMapping("/otimizar")
+    public ResponseEntity<List<RotaResponse>> getAllRotasOtimizar() {
+        List<RotaResponse> responseList = rotaOtimizadaRepository.findAll().stream()
+                .map(RotaResponse::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseList);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RotaResponse> getRotaById(@PathVariable Long id) {
         RotaOtimizada rotaOtimizada = rotaOtimizadaRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rota otimizada não encontrada com ID: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Rota otimizada não encontrada com ID: " + id));
         return ResponseEntity.ok(new RotaResponse(rotaOtimizada));
     }
 

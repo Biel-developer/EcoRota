@@ -26,21 +26,22 @@ export default function Login() {
             return;
         }
 
-        setLoading(true); 
+        setLoading(true);
 
         setTimeout(() => {
             setSuccess("Login realizado com sucesso!");
-            setLoading(false); 
-            router.push("/mapa"); 
-        }, 2000); 
+            setLoading(false);
+            localStorage.setItem("isLoggedIn", "true");
+            router.push("/mapa");
+        }, 2000);
     };
 
 
     return (
         <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-heading">
-                 <span className="logo-icon">
-                  <i className="fas fa-route"></i>
+                <span className="logo-icon">
+                    <i className="fas fa-route"></i>
                 </span>
                 <span className="logo-text">EcoRota</span>
             </div>
