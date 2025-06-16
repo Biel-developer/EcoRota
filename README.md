@@ -135,7 +135,7 @@ O projeto já esta com as dependências corretas só basta utilizar os comandos 
 
 **Front-end:** Next, css, TypeScript
 
-**Back-end:** Java, Spring-Boot
+**Back-end:** Java, Spring-Boot + algoritmo dijkstra
 
 **Banco de Dados:** PostgreeSql
 

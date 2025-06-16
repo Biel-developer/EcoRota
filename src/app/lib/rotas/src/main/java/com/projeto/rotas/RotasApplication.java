@@ -11,5 +11,4 @@ public class RotasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RotasApplication.class, args);
 	}
-
 }

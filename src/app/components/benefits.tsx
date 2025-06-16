@@ -4,7 +4,7 @@ export default function Benefits() {
       <div className="container">
         <div className="section-header">
           <span className="section-tag">Benefícios</span>
-          <h2 className="section-title">Vantagens do EchoRota</h2>
+          <h2 className="section-title">Vantagens do EcoRota</h2>
           <p className="section-subtitle">Transformando a gestão de resíduos urbanos</p>
         </div>
         <div className="benefits-grid">

@@ -9,13 +9,23 @@ export default function Technologies() {
         </div>
         <div className="tech-grid">
           <div className="tech-card" data-aos="flip-left">
-            <div className="tech-icon"><i className="fab fa-python"></i></div>
-            <h3>Não definido</h3>
+            <div className="tech-icon"><i className="fab fa-react"></i></div>
+            <h3>Next.js</h3>
           </div>
 
           <div className="tech-card" data-aos="flip-left">
-            <div className="tech-icon"><i className="fab fa-react"></i></div>
-            <h3>Não definido</h3>
+            <div className="tech-icon"><i className="fas fa-database"></i></div>
+            <h3>PostgreSQL</h3>
+          </div>
+
+          <div className="tech-card" data-aos="flip-left">
+            <div className="tech-icon"><i className="fab fa-java"></i></div>
+            <h3>Java</h3>
+          </div>
+
+          <div className="tech-card" data-aos="flip-left">
+            <div className="tech-icon"><i className="fas fa-paper-plane"></i></div>
+            <h3>Postman</h3>
           </div>
         </div>
       </div>

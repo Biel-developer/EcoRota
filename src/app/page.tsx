@@ -18,7 +18,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setLoading(false)
     }, 2000)
@@ -27,7 +26,6 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    // Set current year in footer
     const yearElement = document.getElementById("year")
     if (yearElement) {
       yearElement.textContent = new Date().getFullYear().toString()

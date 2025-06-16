@@ -5,11 +5,9 @@ import dynamic from "next/dynamic"
 import { useMap } from "react-leaflet"
 import { LatLngExpression } from "leaflet";
 import './globals.css'
-import { useRouter } from "next/navigation"; // ou 'next/router' para pages/
+import { useRouter } from "next/navigation"; 
 
  
-
-// Importação dinâmica dos componentes do react-leaflet (SSR off)
 const MapContainer = dynamic(() => import("react-leaflet").then(m => m.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import("react-leaflet").then(m => m.TileLayer), { ssr: false });
 const Marker = dynamic(() => import("react-leaflet").then(m => m.Marker), { ssr: false });
@@ -55,7 +53,7 @@ const trashIcon = () => {
     shadowAnchor: [12, 41],
   });
 };
-// Tipos para os dados da API
+
 interface Caminhao {
   id: number
   placa: string
@@ -143,11 +141,10 @@ export default function EcoRotaMap() {
   const router = useRouter();
 
   useEffect(() => {
-    // Verifica se está logado
     if (typeof window !== "undefined") {
       const isLoggedIn = localStorage.getItem("isLoggedIn");
       if (isLoggedIn !== "true") {
-        router.replace("/login"); // redireciona para o login
+        router.replace("/login"); 
       }
     }
   }, [router]);
@@ -167,7 +164,6 @@ export default function EcoRotaMap() {
   const [animando, setAnimando] = useState(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
-  // Estado para rota do GraphHopper desenhada no mapa
   const [rotaGraphHopper, setRotaGraphHopper] = useState<[number, number][]>([]);
 
   const posicaoInicial: [number, number] = [-23.420999, -51.933056]
@@ -183,7 +179,6 @@ export default function EcoRotaMap() {
         fetch("http://localhost:8081/api/rotas").then((res) => res.json()),
       ])
 
-      // Corrige o mapeamento dos caminhões para garantir latitude/longitude corretos
       const caminhoesMapeados = resCaminhoes.map((c: any) => ({
         id: c.id,
         placa: c.placa,
@@ -233,15 +228,14 @@ export default function EcoRotaMap() {
     }
   }
 
-  // Função para calcular métricas de desempenho
   const calcularMetricas = (rotasData: Rota[], pontosData: PontoColeta[]) => {
     const distanciaTotalMetros = rotasData.reduce((acc, rota) => acc + rota.distanciaTotalMetros, 0)
     const tempoTotalEstimadoSegundos = rotasData.reduce((acc, rota) => acc + rota.tempoTotalEstimadoSegundos, 0)
     const sequenciaNos = new Set(rotasData.flatMap((rota) => Array.isArray(rota.pontos) ? rota.pontos : [])).size
 
-    const distanciaTotalKm = distanciaTotalMetros / 1000
+    const distanciaTotalKm = distanciaTotalMetros / 3000
 
-    const combustivelEconomizado = distanciaTotalKm * 0.05
+    const combustivelEconomizado = distanciaTotalKm * 0.10
     const eficiencia = distanciaTotalKm > 0 ? (sequenciaNos / distanciaTotalKm) * 100 : 0
 
     setMetricas({
@@ -285,7 +279,6 @@ export default function EcoRotaMap() {
     setAnimando(false);
     setCaminhaoAnimadoPos(null);
 
-    // Use o caminho do GraphHopper se fornecido, senão o caminho padrão
     const caminho = caminhoCustomizado && caminhoCustomizado.length > 1
       ? caminhoCustomizado
       : (rota.pontos
@@ -319,11 +312,10 @@ export default function EcoRotaMap() {
             : c
         )
       );
-    }, 500); // ajuste a velocidade aqui (ms)
+    }, 500);
     setIntervalId(id);
   };
 
-  // Função para traçar rota usando GraphHopper entre todos os pontos de uma rota selecionada
   const traçarRotaGraphHopper = async (rota: Rota) => {
     if (!rota || !rota.pontos || rota.pontos.length < 2) {
       alert("Selecione uma rota com pelo menos dois pontos.");
@@ -333,7 +325,6 @@ export default function EcoRotaMap() {
       .map((pontoId) => obterCoordenadas(pontoId))
       .filter((coord) => coord !== null) as [number, number][];
 
-    // Remove pontos duplicados
     coords = coords.filter(
       (coord, idx, arr) =>
         arr.findIndex(
@@ -395,12 +386,7 @@ export default function EcoRotaMap() {
         {/* ...header igual... */}
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-white p-2 rounded-lg">
-              <svg className="w-6 h-6 text-green-700" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
-              </svg>
-            </div>
+             <i className="fas fa-route"></i>
             <h1 className="text-3xl font-bold">EcoRota</h1>
             <span className="text-green-200 text-sm">Sistema de Otimização de Rotas</span>
           </div>
